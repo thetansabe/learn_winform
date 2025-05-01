@@ -35,9 +35,9 @@
             btnEdit = new Button();
             btnDelete = new Button();
             btnSearch = new Button();
-            backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
+            backgroundWorker = new System.ComponentModel.BackgroundWorker();
             progressBar1 = new ProgressBar();
-            label2 = new Label();
+            lblPercent = new Label();
             btnExport = new Button();
             ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
             SuspendLayout();
@@ -103,6 +103,10 @@
             btnSearch.Text = "Search";
             btnSearch.UseVisualStyleBackColor = true;
             // 
+            // backgroundWorker
+            // 
+
+            // 
             // progressBar1
             // 
             progressBar1.Location = new Point(12, 388);
@@ -110,14 +114,14 @@
             progressBar1.Size = new Size(249, 23);
             progressBar1.TabIndex = 7;
             // 
-            // label2
+            // lblPercent
             // 
-            label2.AutoSize = true;
-            label2.Location = new Point(87, 427);
-            label2.Name = "label2";
-            label2.Size = new Size(101, 15);
-            label2.TabIndex = 8;
-            label2.Text = "proccessing ... 0%";
+            lblPercent.AutoSize = true;
+            lblPercent.Location = new Point(87, 427);
+            lblPercent.Name = "lblPercent";
+            lblPercent.Size = new Size(101, 15);
+            lblPercent.TabIndex = 8;
+            lblPercent.Text = "proccessing ... 0%";
             // 
             // btnExport
             // 
@@ -133,7 +137,7 @@
             BackColor = Color.WhiteSmoke;
             ClientSize = new Size(621, 465);
             Controls.Add(btnExport);
-            Controls.Add(label2);
+            Controls.Add(lblPercent);
             Controls.Add(progressBar1);
             Controls.Add(btnSearch);
             Controls.Add(btnDelete);
@@ -159,9 +163,9 @@
         private Button btnEdit;
         private Button btnDelete;
         private Button btnSearch;
-        private System.ComponentModel.BackgroundWorker backgroundWorker1;
+        private System.ComponentModel.BackgroundWorker backgroundWorker;
         private ProgressBar progressBar1;
-        private Label label2;
+        private Label lblPercent;
         private Button btnExport;
     }
 }
