@@ -1,5 +1,6 @@
 ﻿namespace todoapp.Views
 {
+
     public interface ITodoView
     {
         // Properties for the Todo view
@@ -18,6 +19,9 @@
         event EventHandler SearchTodo;
         event EventHandler ShowAllTodos;
         event EventHandler ExportTodos;
+
+        event EventHandler<string> CustomEvent;
+        void ReportProgress(int progressPercentage);
 
         // Methods for the Todo view
         void SetTodosBindingSource(BindingSource bindingSource);

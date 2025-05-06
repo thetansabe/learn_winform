@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Configuration;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -30,10 +32,10 @@ namespace todoapp.Presenters
             _view.DeleteTodo += OnDeleteTodo;
             _view.SearchTodo += OnSearchTodo;
             _view.ShowAllTodos += OnShowAllTodos;
+            _view.CustomEvent += OnCustomEvent;
 
             // Subscribe to export event
             _view.ExportTodos += OnExportTodos;
-
             // Set the binding source for the view
             _view.SetTodosBindingSource(todoBindingSource);
 
@@ -41,28 +43,26 @@ namespace todoapp.Presenters
             LoadAllTodos();
 
             // Start the autosave feature
-            //Task.Run(() => AutoSave());
+            Task.Run(() => AutoSave());
 
             // Show the view
             _view.Show();
         }
 
+        private void OnCustomEvent(object? sender, string e)
+        {
+            Debug.WriteLine($"Custom event triggered with message: {e}");
+        }
+
         // Method to autosave after a period of inactivity
-        private async void AutoSave()
+        private async Task AutoSave()
         {
             while (true)
             {
-                await Task.Delay(TimeSpan.FromSeconds(5)); // Autosave every 5 secs
-
-                if (_view is Form viewForm && viewForm.InvokeRequired)
-                {
-                    viewForm.Invoke(new EventHandler(OnUpdateTodo), this, EventArgs.Empty);
-                }
-                else
-                {
-                    OnUpdateTodo(this, EventArgs.Empty);
-                }
-                LoadAllTodos(); // Reload after attempting to save
+                Debug.WriteLine("current thread before task delay: " + Thread.CurrentThread.ManagedThreadId);
+                await Task.Delay(TimeSpan.FromSeconds(10)).ConfigureAwait(false);
+                Debug.WriteLine("current thread after task delay: " + Thread.CurrentThread.ManagedThreadId);
+                //OnUpdateTodo(this, EventArgs.Empty);
             }
         }
 
@@ -70,7 +70,13 @@ namespace todoapp.Presenters
         // reflect the saving back to the progress bar
         private void OnExportTodos(object? sender, EventArgs e)
         {
-            
+            for (int i = 0; i < 1200000; i++)
+            {
+                var a = (i + 1) * 100 / 1200000;
+                Debug.WriteLine($"Exporting {a}% - Thread id {Thread.CurrentThread.ManagedThreadId}");
+                _view.ReportProgress(a);
+                Thread.Sleep(100); // on thread hien 
+            }
         }
 
         private void LoadAllTodos()
@@ -95,7 +101,7 @@ namespace todoapp.Presenters
 
         private void OnSearchTodo(object? sender, EventArgs e)
         {
-            throw new NotImplementedException();
+            return;
         }
 
         private void OnDeleteTodo(object? sender, EventArgs e)
